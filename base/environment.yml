@@ -1,0 +1,19 @@
+name: diracx
+channels:
+  - diracgrid
+  - conda-forge
+  - nodefaults
+dependencies:
+  - cachetools
+  # Needed because coverage runs inside the image
+  # when doing the integration tests
+  - coverage
+  - git
+  - gitpython
+  - httpx
+  - pip
+  - pydantic =1.10.10
+  - python =3.11
+  - pyyaml
+  - requests
+  - urllib3 <2

@@ -8,8 +8,12 @@ on:
     branches:
       - main
 
+
+# https://github.com/docker/build-push-action/issues/461
+# https://github.com/docker/build-push-action/issues/906#issuecomment-1674567311
+
 jobs:
-  build:
+  build_old:
     runs-on: ubuntu-latest
     timeout-minutes:  30
     strategy:
@@ -36,3 +40,69 @@ jobs:
           push: ${{ github.event_name == 'push' && github.repository == 'DIRACGrid/container-images' && github.ref_name == 'main' }}
           tags: ghcr.io/diracgrid/diracx/${{ matrix.image-name }}:latest
           platforms: linux/amd64,linux/arm64
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes:  30
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to GitHub container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build base
+        id: build_base
+        uses: docker/build-push-action@v5
+        with:
+          context: base
+          outputs: type=oci,dest=output-base.tar
+          tags: ghcr.io/diracgrid/diracx/base:latest
+          platforms: linux/amd64,linux/arm64
+      - name: Extract base
+        run: |
+          mkdir output-base
+          tar -C output-base -xf output-base.tar
+
+      - name: Build services-base
+        uses: docker/build-push-action@v5
+        with:
+          context: services-base
+          build-contexts: |
+            ghcr.io/diracgrid/diracx/base=oci-layout://output-base@${{steps.build_base.outputs.digest}}
+          outputs: type=oci,dest=output-services-base.tar
+          tags: ghcr.io/diracgrid/diracx/services-base:latest
+          platforms: linux/amd64,linux/arm64
+      - name: Extract services-base
+        run: |
+          mkdir output-services-base
+          tar -C output-services-base -xf output-services-base.tar
+
+      - name: Build client-base
+        uses: docker/build-push-action@v5
+        with:
+          context: client-base
+          build-contexts: |
+            ghcr.io/diracgrid/diracx/base=oci-layout://output-base@${{steps.build_base.outputs.digest}}
+          outputs: type=oci,dest=output-client-base.tar
+          tags: ghcr.io/diracgrid/diracx/client-base:latest
+          platforms: linux/amd64,linux/arm64
+      - name: Extract client-base
+        run: |
+          mkdir output-client-base
+          tar -C output-client-base -xf output-client-base.tar
+
+      - name: Push images
+        if: ${{ github.event_name != 'pull_grequest' && github.repository == 'DIRACGrid/container-images' && github.ref_name == 'main' }}
+        run: |
+          for image_name in base services-base client-base; do
+            oras cp --from-oci-layout "$PWD/output-${image_name}:latest" "ghcr.io/diracgrid/diracx/${image_name}:latest"
+          done
