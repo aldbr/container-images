@@ -1,0 +1,22 @@
+name: diracx
+channels:
+  - diracgrid
+  - conda-forge
+  - nodefaults
+dependencies:
+  - authlib
+  - aiomysql
+  - aiosqlite
+  - email-validator
+  - fastapi
+  - isodate
+  - opensearch-py
+  - pyjwt
+  - coverage
+  - python-dotenv
+  - python-jose
+  - python-multipart
+  - sqlalchemy
+  - uvicorn
+  - aiobotocore
+  - botocore

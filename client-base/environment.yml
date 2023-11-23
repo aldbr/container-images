@@ -1,0 +1,13 @@
+name: diracx
+channels:
+  - diracgrid
+  - conda-forge
+  - nodefaults
+dependencies:
+  - aiohttp
+  - azure-core
+  - cachetools
+  - python-dotenv
+  - python-multipart
+  - rich
+  - typer

@@ -1,0 +1,29 @@
+# This yaml file contains the list of DIRAC dependencies that must be satisfied
+# even if we won't need it. For example, gfal2 needs to be installed in order to
+# be able to install DIRAC, even in the services.
+# These dependencies are separated from the main environment.yml in the hope that
+# we can one day remove entirely this file
+
+name: diracx
+channels:
+  - diracgrid
+  - conda-forge
+  - nodefaults
+dependencies:
+  - aiobotocore
+  - boto3
+  - botocore
+  - db12
+  - diraccfg
+  - dominate
+  - fts3
+  - importlib-metadata
+  - m2crypto >=0.38.0
+  - pexpect
+  - prompt-toolkit
+  - psutil
+  - pyasn1-modules
+  - pyparsing
+  - python-gfal2
+  - pytz
+  - rucio-clients
