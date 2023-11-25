@@ -110,7 +110,7 @@ jobs:
 
           image_version=$(date +'%Y.%m.%d')
           # Check how many tags already exist for the current date and increment the version
-          count=$(oras repo tags "ghcr.io/diracgrid/diracx/base" | grep -c "${image_version}" || echo "0")
+          count=$(oras repo tags "ghcr.io/diracgrid/diracx/base" | { grep -c "${image_version}" || true; } )
           image_version=${image_version}.${count}
           echo "Pushing version ${image_version}"
 
