@@ -107,7 +107,7 @@ jobs:
         if: ${{ github.event_name != 'pull_request' && github.repository == 'DIRACGrid/container-images' && github.ref_name == 'main' }}
         run: |
           image_version=$(date +'%Y.%m.%d')
-          image_version=${image_version}.$(oras repo tags "ghcr.io/diracgrid/diracx/base" | grep --count "${image_version}")
+          image_version=${image_version}.$(oras repo tags "ghcr.io/diracgrid/diracx/base" | { grep --count "${image_version}" || true } )
           echo "Pushing version ${image_version}"
 
           for image_name in base services-base client-base; do
