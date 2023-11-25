@@ -106,12 +106,12 @@ jobs:
       - name: Push images
         if: ${{ github.event_name != 'pull_request' && github.repository == 'DIRACGrid/container-images' && github.ref_name == 'main' }}
         run: |
-          image_repo=ghcr.io/diracgrid/diracx/${image_name}
           image_version=$(date +'%Y.%m.%d')
-          image_version=${image_version}.$(oras repo tags "${image_repo}" | grep --count "${image_version}")
+          image_version=${image_version}.$(oras repo tags "ghcr.io/diracgrid/diracx/base" | grep --count "${image_version}")
           echo "Pushing version ${image_version}"
 
           for image_name in base services-base client-base; do
+            image_repo=ghcr.io/diracgrid/diracx/${image_name}
             oras cp --from-oci-layout "$PWD/output-${image_name}:latest" "${image_repo}:${image_version}"
             oras cp "${image_repo}:${image_version}" "${image_repo}:latest"
           done
