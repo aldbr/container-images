@@ -4,10 +4,12 @@ channels:
   - conda-forge
   - nodefaults
 dependencies:
+  - authlib
   - cachetools
   # Needed because coverage runs inside the image
   # when doing the integration tests
   - coverage
+  - email-validator
   - git
   - gitpython
   - httpx
