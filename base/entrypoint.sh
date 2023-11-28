@@ -18,12 +18,12 @@ function install_sources() {
                 echo "ERROR: Multiple wheels found for ${package_name} in ${dir}"
                 exit 1
             elif [[ ${#wheels[@]} -eq 1 ]]; then
-                pip install "${wheels[0]}"
+                pip install --no-deps "${wheels[0]}"
             elif [[ -d "${dir}-${package_name}" ]] || [[ "${package_name}" == "." ]]; then
                 if [[ -n "${DIRACX_CUSTOM_SOURCE_EDITABLE:-}" ]]; then
-                    pip install -e "${dir}-${package_name}"
+                    pip install --no-deps -e "${dir}-${package_name}"
                 else
-                    pip install "${dir}-${package_name}"
+                    pip install --no-deps "${dir}-${package_name}"
                 fi
             fi
         done
