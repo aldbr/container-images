@@ -4,7 +4,8 @@ EXPOSE 8000
 # Copying in ENTRYPOINT script and environment specification
 COPY --chown=$MAMBA_USER:$MAMBA_USER environment.yml /tmp/
 
-ENV DIRACX_IMAGE_PACKAGES=core,db,routers
+# diracx-client is included here as it's needed by vanilla DIRAC
+ENV DIRACX_IMAGE_PACKAGES=core,db,router,clients
 
 RUN micromamba install --freeze-installed --yes --file /tmp/environment.yml  --name=base && \
     micromamba clean --all --yes --force-pkgs-dirs && \
