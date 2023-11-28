@@ -24,7 +24,11 @@ function install_sources() {
                 if [[ -n "${DIRACX_CUSTOM_SOURCE_EDITABLE:-}" ]]; then
                     to_install+=("-e")
                 fi
-                to_install+=("${dir}-${package_name}")
+                if [[ "${package_name}" == "." ]]; then
+                    to_install+=("${dir}")
+                else
+                    to_install+=("${dir}-${package_name}")
+                fi
             fi
         done
     done
