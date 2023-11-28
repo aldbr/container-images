@@ -30,3 +30,7 @@ dependencies:
   - sqlalchemy
   - authlib
   - pyjwt
+  # For diracx-client
+  - azure-core
+  - isodate
+  - requests
