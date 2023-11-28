@@ -14,7 +14,7 @@ function install_sources() {
             else
                 wheel_name="diracx_${package_name}"
             fi
-            wheels=("${dir}/${wheel_name}"-*.whl)
+            wheels=( $(find "${dir}" -name "${wheel_name}-*.whl") )
             if [[ ${#wheels[@]} -gt 1 ]]; then
                 echo "ERROR: Multiple wheels found for ${package_name} in ${dir}"
                 exit 1
