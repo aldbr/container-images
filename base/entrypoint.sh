@@ -14,10 +14,10 @@ function install_sources() {
                 wheel_name="diracx_${package_name}"
             fi
             wheels=("${dir}/${wheel_name}"-*.whl)
-            if [[ ${wheels[#]} -gt 1 ]]; then
+            if [[ ${#wheels[@]} -gt 1 ]]; then
                 echo "ERROR: Multiple wheels found for ${package_name} in ${dir}"
                 exit 1
-            elif [[ ${wheels[#]} -eq 1 ]]; then
+            elif [[ ${#wheels[@]} -eq 1 ]]; then
                 pip install "${wheels[0]}"
             elif [[ -d "${dir}-${package_name}" ]] || [[ "${package_name}" == "." ]]; then
                 if [[ -n "${DIRACX_CUSTOM_SOURCE_EDITABLE:-}" ]]; then
