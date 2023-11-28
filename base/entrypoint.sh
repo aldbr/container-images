@@ -20,14 +20,17 @@ function install_sources() {
                 exit 1
             elif [[ ${#wheels[@]} -eq 1 ]]; then
                 to_install+=("${wheels[0]}")
-            elif [[ -d "${dir}-${package_name}" ]] || [[ "${package_name}" == "." ]]; then
+            else
+                if [[ "${package_name}" == "." ]]; then
+                    src_dir=("${dir}")
+                else
+                    src_dir=("${dir}-${package_name}")
+                fi
                 if [[ -n "${DIRACX_CUSTOM_SOURCE_EDITABLE:-}" ]]; then
                     to_install+=("-e")
                 fi
-                if [[ "${package_name}" == "." ]]; then
-                    to_install+=("${dir}")
-                else
-                    to_install+=("${dir}-${package_name}")
+                if [[ -d "${src_dir}" ]]; then
+                    to_install+=("${src_dir}")
                 fi
             fi
         done
