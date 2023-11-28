@@ -29,7 +29,7 @@ function install_sources() {
                 if [[ -n "${DIRACX_CUSTOM_SOURCE_EDITABLE:-}" ]]; then
                     to_install+=("-e")
                 fi
-                if [[ -d "${src_dir}" ]]; then
+                if [[ -f "${src_dir}/pyproject.toml" ]]; then
                     to_install+=("${src_dir}")
                 fi
             fi
