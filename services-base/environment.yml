@@ -20,3 +20,4 @@ dependencies:
   - uvicorn
   - aiobotocore
   - botocore
+  - ca-policy-lcg
