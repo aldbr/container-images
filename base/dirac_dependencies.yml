@@ -19,6 +19,7 @@ dependencies:
   - fts3
   - importlib-metadata
   - m2crypto >=0.38.0
+  - packaging
   - pexpect
   - prompt-toolkit
   - psutil
