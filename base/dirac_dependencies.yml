@@ -10,7 +10,7 @@ channels:
   - conda-forge
   - nodefaults
 dependencies:
-  - aiobotocore
+  - aiobotocore >=2.12
   - boto3
   - botocore
   - cwltool
@@ -28,7 +28,7 @@ dependencies:
   - pyparsing
   - python-gfal2
   - pytz
-  - rucio-clients
+  - rucio-clients >=1.29.10
   - sqlalchemy
   - authlib
   - pyjwt

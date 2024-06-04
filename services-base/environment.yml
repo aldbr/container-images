@@ -18,7 +18,7 @@ dependencies:
   - python-multipart
   - sqlalchemy
   - uvicorn
-  - aiobotocore
+  - aiobotocore >=2.12
   - botocore
   - ca-policy-lcg
   - opentelemetry-api
