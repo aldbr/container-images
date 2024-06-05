@@ -28,7 +28,7 @@ dependencies:
   - pyparsing
   - python-gfal2
   - pytz
-  - rucio-clients >=1.29.10
+  - rucio-clients >=34.4.2
   - sqlalchemy
   - authlib
   - pyjwt
