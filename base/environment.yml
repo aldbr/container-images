@@ -15,6 +15,7 @@ dependencies:
   - httpx
   - pip
   - pydantic >=2
+  - pydantic-settings
   - python =3.11
   - pyyaml
   - requests
