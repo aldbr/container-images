@@ -14,7 +14,7 @@ dependencies:
   - gitpython
   - httpx
   - pip
-  - pydantic =1.10.13
+  - pydantic >=2
   - python =3.11
   - pyyaml
   - requests
