@@ -37,7 +37,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ${{ matrix.image-name }}
           push: ${{ github.event_name == 'push' && github.repository == 'DIRACGrid/container-images' && github.ref_name == 'main' }}
@@ -64,7 +64,7 @@ jobs:
 
       - name: Build base
         id: build_base
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: base
           outputs: type=oci,dest=output-base.tar
@@ -76,7 +76,7 @@ jobs:
           tar -C output-base -xf output-base.tar
 
       - name: Build services-base
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: services-base
           build-contexts: |
@@ -90,7 +90,7 @@ jobs:
           tar -C output-services-base -xf output-services-base.tar
 
       - name: Build client-base
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: client-base
           build-contexts: |
