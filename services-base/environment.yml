@@ -26,5 +26,6 @@ dependencies:
   - opentelemetry-instrumentation-fastapi
   - opentelemetry-instrumentation-logging
   - opentelemetry-sdk
-  # Exclude version 0.12.4 of typer: https://github.com/DIRACGrid/diracx/issues/280
-  - typer!=0.12.4
+  # Exclude version >= 0.12.4 of typer: https://github.com/DIRACGrid/diracx/issues/280
+  # typer should not be part of services-base, once typer is unfrozen, it should be removed from here
+  - typer<0.12.4
