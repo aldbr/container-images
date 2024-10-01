@@ -5,14 +5,18 @@ eval "$(micromamba shell hook --shell=posix)"
 micromamba activate base
 
 function install_sources() {
+    extension_name=$1
+	source_prefix=$2
+	image_packages=$3
+
     IFS=','
     to_install=()
-    for dir in ${DIRACX_CUSTOM_SOURCE_PREFIXES}; do
-        for package_name in ${DIRACX_IMAGE_PACKAGES}; do
+    for dir in ${!source_prefix}; do
+        for package_name in ${!image_packages}; do
             if [[ "${package_name}" == "." ]]; then
-                wheel_name="diracx"
+                wheel_name="${extension_name}"
             else
-                wheel_name="diracx_${package_name}"
+                wheel_name="${extension_name}_${package_name}"
             fi
             wheels=( $(find "${dir}" -name "${wheel_name}-*.whl") )
             if [[ ${#wheels[@]} -gt 1 ]]; then
@@ -26,9 +30,6 @@ function install_sources() {
                 else
                     src_dir=("${dir}-${package_name}")
                 fi
-                if [[ -n "${DIRACX_CUSTOM_SOURCE_EDITABLE:-}" ]]; then
-                    to_install+=("-e")
-                fi
                 if [[ -f "${src_dir}/pyproject.toml" ]]; then
                     to_install+=("${src_dir}")
                 fi
@@ -40,8 +41,26 @@ function install_sources() {
     fi
 }
 
-if [[ -n "${DIRACX_CUSTOM_SOURCE_PREFIXES:-}" ]]; then
-    install_sources
+
+# If we have extensions, we install them all the same way
+if [[ -n "${DIRACX_EXTENSIONS:-}" ]]; then
+	
+	# Loop over the extension in reverse order
+	IFS=', ' read -r -a extension_array <<< "$DIRACX_EXTENSIONS"
+	for (( idx=${#extension_array[@]}-1 ; idx>=0 ; idx-- )) ; do
+
+		extension_name="${extension_array[idx]}"
+		source_prefix="${extension_name^^}_CUSTOM_SOURCE_PREFIXES"
+		image_packages="${extension_name^^}_IMAGE_PACKAGES"
+		
+		if [[ -n "${!source_prefix:-}" ]]; then
+			install_sources "${extension_name}" "${source_prefix}" "${image_packages}"
+		fi
+	done
+# No extensions, just diracx
+elif [[ -n "${DIRACX_CUSTOM_SOURCE_PREFIXES:-}" ]]; then
+    install_sources "diracx" "DIRACX_CUSTOM_SOURCE_PREFIXES" "DIRACX_IMAGE_PACKAGES"
 fi
+
 
 exec "$@"
