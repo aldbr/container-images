@@ -17,7 +17,7 @@ This image is used as the base of the diracx service image.
 
 ## How to build
 
-The most up to date documentation on how to build is the [CI job](.github/workflows/main.yml)
+The most up to date documentation on how to build is the [CI job](.github/workflows/main.yml).
 
 ```bash
 
