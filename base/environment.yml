@@ -20,3 +20,4 @@ dependencies:
   - pyyaml
   - requests
   - urllib3 <2
+  - sh
