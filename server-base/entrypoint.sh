@@ -9,4 +9,5 @@ ulimit -n 8192
 
 eval "$(micromamba shell hook --shell=posix)"
 micromamba activate base
-exec "$@"
+# Use tini to avoid zombie processes and properly handle signal forwarding
+exec tini -- "$@"
