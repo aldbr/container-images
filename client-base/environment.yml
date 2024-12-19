@@ -12,3 +12,4 @@ dependencies:
   - python-multipart
   - rich
   - typer
+  - tini
