@@ -63,4 +63,5 @@ elif [[ -n "${DIRACX_CUSTOM_SOURCE_PREFIXES:-}" ]]; then
 fi
 
 
-exec "$@"
+# Use tini to avoid zombie processes and properly handle signal forwarding
+exec tini -- "$@"

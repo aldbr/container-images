@@ -21,3 +21,4 @@ dependencies:
   - requests
   - urllib3 <2
   - sh
+  - tini
