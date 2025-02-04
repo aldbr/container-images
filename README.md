@@ -10,9 +10,6 @@ See [documentation](https://github.com/DIRACGrid/diracx/blob/main/docs/VERSIONIN
 
 This image is used by the [helm chart](https://github.com/DIRACGrid/diracx-charts) to run batch jobs within the cluster that automatically generate kubernetes secrets.
 
-### server-base
-
-This image is used as the base of the diracx service image.
 
 
 ## How to build
