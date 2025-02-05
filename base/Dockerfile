@@ -19,4 +19,9 @@ USER 0
 RUN chown -R $MAMBA_USER:0 /opt/conda && chmod -R g=u /opt/conda
 USER $MAMBA_USER
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+# We use _entrypoint.sh to be able to use the micromamba env in
+# the entrypoint
+# https://micromamba-docker.readthedocs.io/en/latest/quick_start.html#activating-a-conda-environment-for-entrypoint-commands
+# Use tini to avoid zombie processes and properly handle signal forwarding
+ENTRYPOINT [ "/usr/local/bin/_entrypoint.sh", "tini", "--", "/entrypoint.sh" ]
+
